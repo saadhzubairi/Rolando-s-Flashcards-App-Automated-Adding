@@ -15,7 +15,7 @@ with open("output.csv", "r") as csv_file:
     for row in csv_reader:
             rows.append(row)
     
-    for r in range(300,350):
+    for r in range(600,650):
         first_input = driver.find_element(by=By.ID, value="mainQuestionInput")
         first_input.send_keys(rows[r][0])
 
