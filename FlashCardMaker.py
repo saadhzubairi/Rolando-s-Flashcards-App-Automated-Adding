@@ -8,14 +8,14 @@ driver = webdriver.Chrome()
 
 driver.get("https://rolandos.net/flashcards/editor.html?language=1")
 
-with open("output.csv", "r") as csv_file:
+with open("output.csv", "r", encoding="utf-8") as csv_file:
     csv_reader = csv.reader(csv_file)
     i = 0
     rows = []
     for row in csv_reader:
-            rows.append(row)
-    
-    for r in range(600,650):
+        rows.append(row)
+
+    for r in range(500, 600):
         first_input = driver.find_element(by=By.ID, value="mainQuestionInput")
         first_input.send_keys(rows[r][0])
 
@@ -27,8 +27,8 @@ with open("output.csv", "r") as csv_file:
         second_input.send_keys(Keys.ENTER)
 
         i += 1
-        print(r+1)
-        if i == 50:
+        print(r + 1)
+        if i == 100:
             break
 
 time.sleep(2000000)

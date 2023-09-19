@@ -13,6 +13,15 @@ italic_style = ParagraphStyle("ItalicStyle", parent=getSampleStyleSheet()["Norma
 italic_style.textColor = colors.black
 italic_style.fontName = "Italic"
 
+simple_style = ParagraphStyle("Normal", parent=getSampleStyleSheet()["Normal"])
+simple_style.textColor = colors.black
+
+simple_style2 = ParagraphStyle("Normal", parent=getSampleStyleSheet()["Normal"])
+simple_style2.textColor = colors.gray
+
+small_style = ParagraphStyle("Normal", fontSize=10)
+small_style.textColor = colors.ReportLabFidRed
+
 
 # Read data from CSV and generate PDF
 def generate_pdf(csv_filename, pdf_filename):
@@ -26,15 +35,18 @@ def generate_pdf(csv_filename, pdf_filename):
 
     paragraph = Paragraph(f"GRE Words List<br/><br/><br/><br/>", style=style)
 
-    with open(csv_filename, "r") as csv_file:
+    with open(csv_filename, "r", encoding="utf-8") as csv_file:
         csv_reader = csv.reader(csv_file)
         ins = 0
         for row in csv_reader:
             ins += 1
-            if len(row) == 3:
-                word, definition, _ = row
+            if len(row) == 4:
+                print(row)
+                word, pos, definition, sentence = row
+                data.append(Paragraph(f"<b><i>{pos}</i></b>", style=small_style))
                 data.append(Paragraph(f"<b>{ins}. {word}</b>:<br/><br/>", style=blueStyle))
-                data.append(Paragraph(f"<i>{definition}</i><br/><br/>"))
+                data.append(Paragraph(f"{definition}<br/>", style=simple_style))
+                data.append(Paragraph(f"<i>{sentence}</i><br/><br/>",style=simple_style2))
 
     doc = SimpleDocTemplate(pdf_filename, pagesize=letter)
     flowables = [paragraph]
@@ -44,6 +56,6 @@ def generate_pdf(csv_filename, pdf_filename):
 
 
 if __name__ == "__main__":
-    csv_filename = "output.csv"
-    pdf_filename = "words.pdf"
+    csv_filename = "MoreWords.csv"
+    pdf_filename = "Magoosh1000WordsList.pdf"
     generate_pdf(csv_filename, pdf_filename)
