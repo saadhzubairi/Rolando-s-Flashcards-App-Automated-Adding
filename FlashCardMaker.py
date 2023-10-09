@@ -8,21 +8,21 @@ driver = webdriver.Chrome()
 
 driver.get("https://rolandos.net/flashcards/editor.html?language=1")
 
-with open("output.csv", "r", encoding="utf-8") as csv_file:
+with open("MoreWords.csv", "r", encoding="utf-8") as csv_file:
     csv_reader = csv.reader(csv_file)
     i = 0
     rows = []
     for row in csv_reader:
         rows.append(row)
 
-    for r in range(500, 600):
+    for r in range(100, 150):
         first_input = driver.find_element(by=By.ID, value="mainQuestionInput")
         first_input.send_keys(rows[r][0])
 
         first_input.send_keys(Keys.TAB)
 
         second_input = driver.find_element(by=By.ID, value="mainSolutionInput")
-        second_input.send_keys(rows[r][1])
+        second_input.send_keys(rows[r][2])
 
         second_input.send_keys(Keys.ENTER)
 
